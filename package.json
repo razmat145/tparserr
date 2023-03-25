@@ -1,0 +1,21 @@
+{
+  "name": "tparserr",
+  "version": "1.0.0",
+  "description": "Typescript Type Parser",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "compile": "tsc",
+    "clean": "rimraf dist/",
+    "build": "npm run clean && npm run compile"
+  },
+  "author": "Razvan Matei (monakyo@gmail.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "rimraf": "^4.4.1",
+    "typescript": "^5.0.2"
+  }
+}
