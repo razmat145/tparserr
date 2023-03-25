@@ -38,7 +38,7 @@ describe('Parserr - FileOptsInput', () => {
     });
 
     it('should parse the simple Line class accordingly, using an absolute dir input', async () => {
-        const targetDir = path.join(__dirname, './files/');;
+        const targetDir = path.join(__dirname, './files/');
 
         const sutOutput = await Parserr.parse({
             targetDir
