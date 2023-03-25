@@ -67,6 +67,8 @@ class Parserr {
 
     private cleanUp() {
         this.filesToExtract = [];
+        Extractor.clean();
+        Session.clear();
     }
 
     private trapDiagnostics() {

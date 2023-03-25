@@ -22,13 +22,26 @@ class File {
     }
 
     public async extractNormalizedFilePaths(): Promise<Array<string>> {
-        const files = await afs.readdir(Session.getConfigItem('callerBaseDir'));
+        const targetDir = this.getTargetDir();
+        const files = await afs.readdir(targetDir);
 
-        return this.normalizeFilePaths(files);
+        const filePaths = _.map(files, file => path.join(targetDir, file));
+
+        return this.normalizeFilePaths(filePaths);
     }
 
     private normalizeFilePaths(filePaths: Array<string>) {
         return _.map(filePaths, filePath => path.normalize(filePath));
+    }
+
+    private getTargetDir() {
+        const targetDir = Session.getConfigItem('targetDir');
+
+        if (Session.getConfigItem('useRelativePaths')) {
+            return path.join(Session.getConfigItem('callerBaseDir'), targetDir);
+        } else {
+            return targetDir;
+        }
     }
 
 }

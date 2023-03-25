@@ -28,7 +28,7 @@ class Extractor {
         );
     }
 
-    public extractTypesAndEntityNames() {
+    private extractTypesAndEntityNames() {
         const sourceFiles = Session.getProgram().getSourceFiles();
 
         for (const sourceFile of sourceFiles) {
@@ -74,6 +74,11 @@ class Extractor {
         const name = Session.getTypeChecker().getFullyQualifiedName(symbol);
 
         return name.replace(/('|").*('|")\./, '');
+    }
+
+    public clean() {
+        this.allTypesMap = {};
+        this.mainEntityNames = [];
     }
 
 }
