@@ -1,8 +1,14 @@
 
 interface IParserOpts {
+    files?: Array<string>;
 
-    includeOnlyDefaultExports: boolean;
+    useRelativePaths?: boolean;
 
+    callerBaseDir?: string;
+
+    targetDir?: string;
+
+    includeOnlyDefaultExports?: boolean;
 }
 
 export default IParserOpts;

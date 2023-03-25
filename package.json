@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "clean": "rimraf dist/",
-    "build": "npm run clean && npm run compile"
+    "build": "npm run clean && npm run compile",
+    "test": "jest"
   },
   "author": "Razvan Matei (monakyo@gmail.com)",
   "license": "Apache-2.0",
@@ -18,10 +19,13 @@
     "pre-commit": "^1.2.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
+    "jest": "^29.5.0",
     "rimraf": "^4.4.1",
+    "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
   },
   "pre-commit": [

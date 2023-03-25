@@ -1,18 +1,17 @@
 
 import * as ts from 'typescript';
+import _ from 'lodash';
 
 import IParserOpts from '../types/IParserOpts';
 
 
 class Session {
 
-    private typeChecker: ts.TypeChecker;
-
     private program: ts.Program;
 
-    private opts: IParserOpts = {
-        includeOnlyDefaultExports: true
-    }; // TODO: configurable input
+    private typeChecker: ts.TypeChecker;
+
+    private opts: IParserOpts;
 
     public setProgram(program: ts.Program) {
         this.program = program;
@@ -35,8 +34,37 @@ class Session {
         }
     }
 
-    public getConfigItem(configKey: keyof IParserOpts) {
-        return this.opts[configKey];
+    public setConfigOpts(opts: IParserOpts) {
+        this.opts = _.assign(this.getConfigDefaults(), opts);
+    }
+
+    public getConfigItem<T extends keyof IParserOpts>(configKey: T) {
+        if (!_.isEmpty(this.opts)) {
+            return this.opts[configKey];
+        } else {
+            throw new Error('Parserr Session ConfigOpts not initialised');
+        }
+    }
+
+    public getConfig(): IParserOpts {
+        if (!_.isEmpty(this.opts)) {
+            return this.opts;
+        } else {
+            throw new Error('Parserr Session ConfigOpts not initialised');
+        }
+    }
+
+    public clear() {
+        this.typeChecker = null;
+        this.program = null;
+        this.opts = this.getConfigDefaults();
+    }
+
+    private getConfigDefaults(): Partial<IParserOpts> {
+        return {
+            includeOnlyDefaultExports: true,
+            useRelativePaths: false
+        };
     }
 
 }
