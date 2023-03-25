@@ -38,9 +38,17 @@ class Session {
         this.opts = _.assign(this.getConfigDefaults(), opts);
     }
 
-    public getConfigItem(configKey: keyof IParserOpts) {
+    public getConfigItem<T extends keyof IParserOpts>(configKey: T) {
         if (!_.isEmpty(this.opts)) {
             return this.opts[configKey];
+        } else {
+            throw new Error('Parserr Session ConfigOpts not initialised');
+        }
+    }
+
+    public getConfig(): IParserOpts {
+        if (!_.isEmpty(this.opts)) {
+            return this.opts;
         } else {
             throw new Error('Parserr Session ConfigOpts not initialised');
         }
@@ -54,7 +62,8 @@ class Session {
 
     private getConfigDefaults(): Partial<IParserOpts> {
         return {
-            includeOnlyDefaultExports: true
+            includeOnlyDefaultExports: true,
+            useRelativePaths: false
         };
     }
 

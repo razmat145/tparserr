@@ -5,6 +5,7 @@ import _ from 'lodash';
 import Extractor from './Extractor';
 
 import Session from './utils/Session';
+import File from './utils/File';
 
 import ITypeDescription from './types/ITypeDescription';
 import IParserOpts from './types/IParserOpts';
@@ -29,18 +30,26 @@ class Parserr {
     private async initialise(opts: IParserOpts) {
         Session.setConfigOpts(opts);
 
-        await this.loadFilePaths(opts);
+        await this.loadFilePaths();
 
         this.createProgram();
     }
 
-    private async loadFilePaths(opts: IParserOpts) {
-        const { files } = opts;
+    private async loadFilePaths() {
+        switch (true) {
+            case Session.getConfigItem('useRelativePaths') && !Session.getConfigItem('callerBaseDir'):
+                throw new Error(`Parserr cannot use relative input paths without a *callerBaseDir* config`);
 
-        if (!_.isEmpty(files)) {
-            this.filesToExtract = files;
-        } else {
-            throw new Error('*files* IParserOpts is currently mandatory');
+            case !_.isEmpty(Session.getConfigItem('files')):
+                this.filesToExtract = File.getNormalizedFilePaths();
+                break;
+
+            case !!Session.getConfigItem('targetDir'):
+                this.filesToExtract = await File.extractNormalizedFilePaths();
+                break;
+
+            default:
+                throw new Error(`Parserr requires either *files* or a *targetDir* config to function`);
         }
     }
 

@@ -1,8 +1,10 @@
 
 interface IParserOpts {
+    files?: Array<string>;
+
     useRelativePaths?: boolean;
 
-    files?: Array<string>;
+    callerBaseDir?: string;
 
     targetDir?: string;
 
