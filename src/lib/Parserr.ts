@@ -1,5 +1,4 @@
 
-import _ from 'lodash';
 import * as ts from 'typescript';
 
 import Extractor from './Extractor';
@@ -33,7 +32,7 @@ class Parserr {
     }
 
     private trapDiagnostics() {
-        let diagnostics = ts.getPreEmitDiagnostics(Session.getProgram());
+        const diagnostics = ts.getPreEmitDiagnostics(Session.getProgram());
 
         for (const diagnostic of diagnostics) {
             const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');

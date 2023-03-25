@@ -6,16 +6,25 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "compile": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "clean": "rimraf dist/",
     "build": "npm run clean && npm run compile"
   },
   "author": "Razvan Matei (monakyo@gmail.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "pre-commit": "^1.2.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
     "rimraf": "^4.4.1",
     "typescript": "^5.0.2"
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
