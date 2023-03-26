@@ -4,12 +4,14 @@ Typescript Type Parser
 
 ## Motivation
 
-Ability to extract basic dumbed down type descriptions for a target file/dir in order for said type description to be potentially used by later libraries for automating/generating various dev QoL utilities.
-Very opinnionated in its intent, this library does not aspire for a be-all and end-all parser and will only include more complex type as and when needed - due to the fact that the majority of real-life type entities are fairly basic.
+Ability to extract basic dumbed down type descriptions for a target file(s)/dir in order for said type descriptions to be potentially used by later libraries for automating/generating various dev QoL utilities.
+Very opinionated in its intent, this library does not aspire to become a be-all and end-all parser and will only include more complex types as and when needed - due to the fact that the majority of real-life type entities are fairly basic.
 
 ### Installing
 
-<TBD>
+```
+npm install --save tparserr
+```
 
 ### Usage
 
@@ -52,7 +54,6 @@ main().catch(console.error);
 
 Would yield a result of
 ```json
-// prettified console.log output
 [
     {
         "name": "Entiy",
