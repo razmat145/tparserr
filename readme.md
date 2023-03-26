@@ -89,8 +89,52 @@ Would yield a result of
                 "required": true
             }
         }
+    },
+    {
+        "name": "CaptureTimestamp",
+        "type": "object",
+        "properties": {
+            "value": {
+                "type": "Date",
+                "required": true
+            },
+            "createdBy": {
+                "type": "string",
+                "required": false
+            }
+        }
     }
 ]
+```
+
+### Configuration
+
+```typescript
+interface IParserOpts {
+    /**
+     * Input files to parse
+     *  - usually absolute paths unless *callerBaseDir* is provided (see below)
+     */
+    files?: Array<string>;
+
+    // Declaring the intention to use relative paths
+    useRelativePaths?: boolean; // defaults to false
+
+    /**
+     * Callers base dir - Must be provided when using relative path file(s)/targetDir or a mix of absolute and relative files
+     * Note: usually this is the dir of the caller's context and can simply be passed as __dirname 
+     */
+    callerBaseDir?: string;
+
+    // Input dir - to be used instead of *files*
+    targetDir?: string;
+
+    // If to parse only default exports
+    includeOnlyDefaultExports?: boolean; // defaults to false
+
+    // If to include only required properties
+    includeOnlyRequiredProperties?: boolean; // defaults to false
+}
 ```
 
 
