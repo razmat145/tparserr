@@ -1,6 +1,6 @@
 {
   "name": "tparserr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Typescript Type Parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,5 +30,9 @@
   },
   "pre-commit": [
     "lint"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/razmat145/tparserr"
+  }
 }
