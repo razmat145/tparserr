@@ -137,6 +137,9 @@ interface IParserOpts {
     // If to include only required properties
     includeOnlyRequiredProperties?: boolean; // defaults to false
 
+    // If to include the neste class names
+    includeNestedClassNames?: boolean; // defaults to false
+
     /**
      * Logger to use instead of console if provided
      * 

@@ -106,4 +106,42 @@ describe('Parserr - FlagOptsInput', () => {
         expect(sutOutput).toEqual(onlyRequiredPropertiesExpectedMatch);
     });
 
+    it('should parse the test files accordingly, also extracting nested classes names if *includeNestedClassNames* true is provided', async () => {
+        const filePaths = [path.join(__dirname, './files/Line')];
+        const includingNesteClassNamesMatch = [{
+            "name": "Line",
+            "type": "object",
+            "properties": {
+                "name": { "type": "string", "required": false },
+                "x": {
+                    "type": "object",
+                    "properties":
+                    {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "name": "Point",
+                    "required": true
+                },
+                "y": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "name": "Point",
+                    "required": true
+                }
+            }
+        }];
+
+        const sutOutput = await Parserr.parse({
+            files: filePaths,
+            includeOnlyDefaultExports: true,
+            includeNestedClassNames: true
+        });
+        
+        expect(sutOutput).toEqual(includingNesteClassNamesMatch);
+    });
+
 });

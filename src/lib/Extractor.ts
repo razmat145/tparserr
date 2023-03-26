@@ -46,6 +46,7 @@ class Extractor {
 
     private extractClass(node: ts.Node, sourceFile: ts.SourceFile) {
         const nodeType = Session.getTypeChecker().getTypeAtLocation(node);
+        
         const maybeSymbol = nodeType.getSymbol();
         if (maybeSymbol) {
 
@@ -64,16 +65,10 @@ class Extractor {
     }
 
     private capture(symbol: ts.Symbol, type: ts.Type): void {
-        const typeName = this.extractTypeName(symbol);
+        const typeName = Type.extractTypeName(symbol);
 
         this.allTypesMap[typeName] = type;
         this.mainEntityNames.push(typeName);
-    }
-
-    private extractTypeName(symbol: ts.Symbol): string {
-        const name = Session.getTypeChecker().getFullyQualifiedName(symbol);
-
-        return name.replace(/('|").*('|")\./, '');
     }
 
     public clean() {

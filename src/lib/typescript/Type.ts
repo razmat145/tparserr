@@ -77,13 +77,22 @@ class Type {
     }
 
     private getClassDescription(type: ts.Type): ITypeDescription {
+
         const properties = Session.getTypeChecker().getPropertiesOfType(type);
         const propertyDescription = this.getPropertyDescription(properties);
 
-        return {
+        const classDescription = {
             type: 'object',
             properties: propertyDescription
         };
+
+        if (Session.getConfigItem('includeNestedClassNames')) {
+            const name = this.extractTypeName(type.getSymbol());
+
+            name && _.assign(classDescription, { name });
+        }
+
+        return classDescription;
     }
 
     private getArrayDescription(type: ts.Type): ITypeDescription {
@@ -106,6 +115,12 @@ class Type {
                 undefined,
                 ts.TypeFormatFlags.UseFullyQualifiedType
             );
+    }
+
+    public extractTypeName(symbol: ts.Symbol): string {
+        const name = Session.getTypeChecker().getFullyQualifiedName(symbol);
+
+        return name.replace(/('|").*('|")\./, '');
     }
 
 }
