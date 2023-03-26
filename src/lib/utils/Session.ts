@@ -68,6 +68,12 @@ class Session {
         };
     }
 
+    public getLogger() {
+        const logger = this.getConfigItem('logger');
+
+        return logger ? logger : console;
+    }
+
 }
 
 export default new Session();

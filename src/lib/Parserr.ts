@@ -66,10 +66,14 @@ class Parserr {
     private trapDiagnostics() {
         const diagnostics = ts.getPreEmitDiagnostics(Session.getProgram());
 
-        for (const diagnostic of diagnostics) {
-            const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+        if (!_.isEmpty(diagnostics)) {
+            for (const diagnostic of diagnostics) {
+                const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
 
-            console.error(message); // TODO: use input cfg logger if provided
+                Session.getLogger().error(message);
+            }
+
+            throw new Error('Typescript Program failed to compile with the provided files');
         }
     }
 
