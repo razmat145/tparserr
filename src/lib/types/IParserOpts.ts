@@ -14,6 +14,8 @@ interface IParserOpts {
 
     includeOnlyRequiredProperties?: boolean;
 
+    includeNestedClassNames?: boolean;
+
     logger?: ILogger
 }
 
