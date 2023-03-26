@@ -1,0 +1,7 @@
+node_modules
+test
+src
+tsconfig.json
+jest.config.js
+.eslintrc
+.eslintignore
