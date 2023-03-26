@@ -58,10 +58,17 @@ class Type {
             const propertyType = Session.getTypeChecker().getTypeOfSymbol(property);
             const propertyDescription = this.getTypeDescription(propertyType)
 
+            const includeOnlyRequiredProperties = Session.getConfigItem('includeOnlyRequiredProperties');
+            const isPropertyOptional = Check.isOptionalSymbol(property);
+
+            if (includeOnlyRequiredProperties && isPropertyOptional) {
+                continue;
+            }
+
             _.assign(propertyDescriptions, {
                 [property.getName()]: {
                     ...propertyDescription,
-                    required: !Check.isOptionalSymbol(property)
+                    required: !isPropertyOptional
                 }
             });
         }

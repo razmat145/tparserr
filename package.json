@@ -1,6 +1,6 @@
 {
   "name": "tparserr",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Typescript Type Parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,9 @@
     "compile": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "clean": "rimraf dist/",
+    "clean": "rimraf dist/"
+    
+    ,
     "build": "npm run clean && npm run compile",
     "test": "jest"
   },
@@ -34,5 +36,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/razmat145/tparserr"
-  }
+  },
+  "keywords": [
+    "typescript",
+    "node",
+    "type parser"
+  ]
 }

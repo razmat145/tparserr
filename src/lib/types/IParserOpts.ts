@@ -9,6 +9,8 @@ interface IParserOpts {
     targetDir?: string;
 
     includeOnlyDefaultExports?: boolean;
+
+    includeOnlyRequiredProperties?: boolean;
 }
 
 export default IParserOpts;
