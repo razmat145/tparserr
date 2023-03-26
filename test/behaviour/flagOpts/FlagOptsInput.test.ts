@@ -5,40 +5,105 @@ import { Parserr } from '../../../src/index';
 
 describe('Parserr - FlagOptsInput', () => {
 
-    it('should parse the test files accordingly, extracting only classes that are using export default', async () => {
-        const filePaths = [path.join(__dirname, './files/Line')];
-        const exportDefaultExpectedMatch = [{
-            "name": "Line",
-            "type": "object",
-            "properties": {
-                "x": { "type": "object", "properties": { "value": { "type": "number", "required": true } }, "required": true },
-                "y": { "type": "object", "properties": { "value": { "type": "number", "required": true } }, "required": true }
-            }
-        }];
-
-        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyDefaultExports: true });
-
-        expect(sutOutput).toEqual(exportDefaultExpectedMatch);
-    });
-
-    it('should parse the test files accordingly, extracting only all classes in file is *includeOnlyDefaultExports* false is provided', async () => {
+    it('should parse the test files accordingly, extracting only classes that are using export default if *includeOnlyDefaultExports* true is provided', async () => {
         const filePaths = [path.join(__dirname, './files/Line')];
         const expectedMatch = [{
             "name": "Line",
             "type": "object",
             "properties": {
-                "x": { "type": "object", "properties": { "value": { "type": "number", "required": true } }, "required": true },
-                "y": { "type": "object", "properties": { "value": { "type": "number", "required": true } }, "required": true }
+                "name": { "type": "string", "required": false },
+                "x": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                },
+                "y": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                }
+            }
+        }];
+
+        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyDefaultExports: true });
+
+        expect(sutOutput).toEqual(expectedMatch);
+    });
+
+    it('should parse the test files accordingly, extracting only all classes in file', async () => {
+        const filePaths = [path.join(__dirname, './files/Line')];
+        const exportDefaultExpectedMatch = [{
+            "name": "Line",
+            "type": "object",
+            "properties": {
+                "name": { "type": "string", "required": false },
+                "x": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                },
+                "y": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "required": false },
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                }
             }
         }, {
             "name": "Point",
             "type": "object",
-            "properties": { "value": { "type": "number", "required": true } }
+            "properties": {
+                "name": { "type": "string", "required": false },
+                "value": { "type": "number", "required": true }
+            }
         }];
 
         const sutOutput = await Parserr.parse({ files: filePaths });
 
-        expect(sutOutput).toEqual(expectedMatch);
+        expect(sutOutput).toEqual(exportDefaultExpectedMatch);
+    });
+
+    it('should parse the test files accordingly, extracting only required properties of classes if *includeOnlyRequiredProperties* true is provided', async () => {
+        const filePaths = [path.join(__dirname, './files/Line')];
+        const onlyRequiredPropertiesExpectedMatch = [{
+            "name": "Line",
+            "type": "object",
+            "properties": {
+                "x": {
+                    "type": "object",
+                    "properties": {
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                },
+                "y": {
+                    "type": "object",
+                    "properties": {
+                        "value": { "type": "number", "required": true }
+                    },
+                    "required": true
+                }
+            }
+        }];
+
+        const sutOutput = await Parserr.parse({
+            files: filePaths,
+            includeOnlyDefaultExports: true,
+            includeOnlyRequiredProperties: true
+        });
+
+        expect(sutOutput).toEqual(onlyRequiredPropertiesExpectedMatch);
     });
 
 });
