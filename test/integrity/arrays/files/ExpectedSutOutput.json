@@ -1,0 +1,84 @@
+[
+    {
+        "name": "Entiy",
+        "type": "object",
+        "properties": {
+            "names": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "required": false
+            },
+            "positions": {
+                "type": "array",
+                "items": {
+                    "type": "number"
+                },
+                "required": true
+            },
+            "flags": {
+                "type": "array",
+                "items": {
+                    "type": "boolean"
+                },
+                "required": false
+            },
+            "points": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "value": {
+                            "type": "number",
+                            "required": true
+                        },
+                        "createdAt": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "Date",
+                                    "required": true
+                                },
+                                "createdBy": {
+                                    "type": "string",
+                                    "required": false
+                                }
+                            },
+                            "required": false
+                        },
+                        "modifiedAt": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "Date",
+                                        "required": true
+                                    },
+                                    "createdBy": {
+                                        "type": "string",
+                                        "required": false
+                                    }
+                                }
+                            },
+                            "required": false
+                        }
+                    }
+                },
+                "required": true
+            },
+            "traces": {
+                "type": "array",
+                "items": {
+                    "type": "Date"
+                },
+                "required": false
+            }
+        }
+    }
+]

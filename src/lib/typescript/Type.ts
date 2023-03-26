@@ -4,7 +4,7 @@ import * as ts from 'typescript';
 
 import Session from '../utils/Session';
 
-import Flag from './Check';
+import Check from './Check';
 
 import ITypeDescription from '../types/ITypeDescription';
 
@@ -12,33 +12,39 @@ import ITypeDescription from '../types/ITypeDescription';
 class Type {
 
     public getTypeDescription(type: ts.Type): ITypeDescription {
-        if (this.isBaseType(type)) {
-            return this.getBaseTypeDescription(type);
-        } else {
-            return this.getClassDescription(type);
+        switch (true) {
+            case this.isBaseType(type):
+                return this.getBaseTypeDescription(type);
+
+            default:
+                return this.getClassDescription(type);
         }
     }
 
     private isBaseType(type: ts.Type): boolean {
         const symbol = type.getSymbol();
 
-        return !symbol
-            || Session.getTypeChecker().getFullyQualifiedName(symbol) === 'Date';
+        return (!symbol
+            || Session.getTypeChecker().getFullyQualifiedName(symbol) === 'Date')
+            || Check.isArrayType(type);
     }
 
     private getBaseTypeDescription(type: ts.Type): ITypeDescription {
         switch (true) {
-            case Flag.isStringType(type):
+            case Check.isStringType(type):
                 return { type: 'string' };
 
-            case Flag.isNumberType(type):
+            case Check.isNumberType(type):
                 return { type: 'number' };
 
-            case Flag.isBooleanType(type):
+            case Check.isBooleanType(type):
                 return { type: 'boolean' };
 
             case this.isDateType(type):
                 return { type: 'Date' };
+
+            case Check.isArrayType(type):
+                return this.getArrayDescription(type);
 
             default:
                 throw new Error(`Type ${this.getTypeString(type)} unrecognised or not yet implemented`);
@@ -55,7 +61,7 @@ class Type {
             _.assign(propertyDescriptions, {
                 [property.getName()]: {
                     ...propertyDescription,
-                    required: !Flag.isOptionalSymbol(property)
+                    required: !Check.isOptionalSymbol(property)
                 }
             });
         }
@@ -70,6 +76,15 @@ class Type {
         return {
             type: 'object',
             properties: propertyDescription
+        };
+    }
+
+    private getArrayDescription(type: ts.Type): ITypeDescription {
+        const indexType = Session.getTypeChecker().getIndexTypeOfType(type, ts.IndexKind.Number);
+
+        return {
+            type: 'array',
+            items: this.getTypeDescription(indexType)
         };
     }
 
