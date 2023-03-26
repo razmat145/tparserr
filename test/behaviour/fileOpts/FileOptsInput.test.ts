@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import path from 'path';
 
-import { Parserr } from '../../src/index';
+import { Parserr } from '../../../src/index';
 
 describe('Parserr - FileOptsInput', () => {
 
@@ -29,7 +29,7 @@ describe('Parserr - FileOptsInput', () => {
     it('should parse the test files accordingly, using an absolute path', async () => {
         const filePaths = _.map(['./files/Line', './files/Point'], file => path.join(__dirname, file));
 
-        const sutOutput = await Parserr.parse({ files: filePaths });
+        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyDefaultExports: true });
 
         expect(sutOutput).toEqual(expectedOutput);
     });
@@ -41,7 +41,8 @@ describe('Parserr - FileOptsInput', () => {
         const sutOutput = await Parserr.parse({
             useRelativePaths: true,
             files: filePaths,
-            callerBaseDir
+            callerBaseDir,
+            includeOnlyDefaultExports: true
         });
 
         expect(sutOutput).toEqual(expectedOutput);
@@ -51,7 +52,7 @@ describe('Parserr - FileOptsInput', () => {
         const targetDir = path.join(__dirname, './files/');
 
         const sutOutput = await Parserr.parse({
-            targetDir
+            targetDir, includeOnlyDefaultExports: true
         });
 
         expect(sutOutput).toEqual(expectedOutput);
@@ -64,7 +65,8 @@ describe('Parserr - FileOptsInput', () => {
         const sutOutput = await Parserr.parse({
             useRelativePaths: true,
             targetDir,
-            callerBaseDir
+            callerBaseDir,
+            includeOnlyDefaultExports: true
         });
 
         expect(sutOutput).toEqual(expectedOutput);
@@ -76,7 +78,8 @@ describe('Parserr - FileOptsInput', () => {
 
         const sutOutput = await Parserr.parse({
             files: filePaths,
-            callerBaseDir
+            callerBaseDir,
+            includeOnlyDefaultExports: true
         });
 
         expect(sutOutput).toEqual(expectedOutput);

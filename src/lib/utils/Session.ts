@@ -62,7 +62,7 @@ class Session {
 
     private getConfigDefaults(): Partial<IParserOpts> {
         return {
-            includeOnlyDefaultExports: true,
+            includeOnlyDefaultExports: false,
             useRelativePaths: false
         };
     }
