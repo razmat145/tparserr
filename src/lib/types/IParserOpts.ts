@@ -1,4 +1,6 @@
 
+import ILogger from './ILogger';
+
 interface IParserOpts {
     files?: Array<string>;
 
@@ -11,6 +13,8 @@ interface IParserOpts {
     includeOnlyDefaultExports?: boolean;
 
     includeOnlyRequiredProperties?: boolean;
+
+    logger?: ILogger
 }
 
 export default IParserOpts;

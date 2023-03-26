@@ -113,7 +113,7 @@ Would yield a result of
 interface IParserOpts {
     /**
      * Input files to parse
-     *  - usually absolute paths unless *callerBaseDir* is provided (see below)
+     * Usually absolute paths unless *callerBaseDir* is provided (see below)
      */
     files?: Array<string>;
 
@@ -121,7 +121,9 @@ interface IParserOpts {
     useRelativePaths?: boolean; // defaults to false
 
     /**
-     * Callers base dir - Must be provided when using relative path file(s)/targetDir or a mix of absolute and relative files
+     * Callers base dir - Must be provided when using relative path file(s)/targetDir 
+     * or a mix of absolute and relative files
+     * 
      * Note: usually this is the dir of the caller's context and can simply be passed as __dirname 
      */
     callerBaseDir?: string;
@@ -134,6 +136,13 @@ interface IParserOpts {
 
     // If to include only required properties
     includeOnlyRequiredProperties?: boolean; // defaults to false
+
+    /**
+     * Logger to use instead of console if provided
+     * 
+     * Note: the logger will be usually used at debug and error log levels
+     */
+    logger?: ILogger // defaults to console
 }
 ```
 
