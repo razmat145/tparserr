@@ -1,6 +1,8 @@
 
 import * as ts from 'typescript';
 
+import Session from '../utils/Session';
+
 
 class Check {
 
@@ -28,6 +30,19 @@ class Check {
 
     public isBooleanType(type: ts.Type): boolean {
         return !!(type.flags & ts.TypeFlags.Boolean);
+    }
+
+    public isObjectType(type: ts.Type): boolean {
+        return !!(type.flags & ts.TypeFlags.Object)
+            &&
+            !!((<ts.ObjectType>type).objectFlags & ts.ObjectFlags.ClassOrInterface)
+    }
+
+    public isArrayType(type: ts.Type): boolean {
+        const isObject = this.isObjectType(type);
+        const hasNumberedIndexType = !!Session.getTypeChecker().getIndexTypeOfType(type, ts.IndexKind.Number);
+
+        return !isObject && hasNumberedIndexType;
     }
 
 }

@@ -6,7 +6,7 @@ interface ITypeDescription {
 
     required?: boolean;
 
-    items?: Record<string, ITypeDescription>;
+    items?: ITypeDescription;
 
     properties?: Record<string, ITypeDescription>;
 }

@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Line",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "required": false
+            },
+            "x": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "value": {
+                        "type": "number",
+                        "required": true
+                    },
+                    "createdAt": {
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "type": "Date",
+                                "required": true
+                            },
+                            "createdBy": {
+                                "type": "string",
+                                "required": false
+                            }
+                        },
+                        "required": false
+                    }
+                },
+                "required": true
+            },
+            "y": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "value": {
+                        "type": "number",
+                        "required": true
+                    },
+                    "createdAt": {
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "type": "Date",
+                                "required": true
+                            },
+                            "createdBy": {
+                                "type": "string",
+                                "required": false
+                            }
+                        },
+                        "required": false
+                    }
+                },
+                "required": true
+            },
+            "createdAt": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "Date",
+                        "required": true
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "required": false
+                    }
+                },
+                "required": false
+            }
+        }
+    }
+]

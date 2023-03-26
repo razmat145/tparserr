@@ -36,20 +36,12 @@ class Parserr {
     }
 
     private async loadFilePaths() {
-        switch (true) {
-            case Session.getConfigItem('useRelativePaths') && !Session.getConfigItem('callerBaseDir'):
-                throw new Error(`Parserr cannot use relative input paths without a *callerBaseDir* config`);
+        File.trapInvalidConfigOpts();
 
-            case !_.isEmpty(Session.getConfigItem('files')):
-                this.filesToExtract = File.getNormalizedFilePaths();
-                break;
-
-            case !!Session.getConfigItem('targetDir'):
-                this.filesToExtract = await File.extractNormalizedFilePaths();
-                break;
-
-            default:
-                throw new Error(`Parserr requires either *files* or a *targetDir* config to function`);
+        if (!_.isEmpty(Session.getConfigItem('files'))) {
+            this.filesToExtract = File.getNormalizedFilePaths();
+        } else {
+            this.filesToExtract = await File.extractNormalizedFilePaths();
         }
     }
 
