@@ -1,6 +1,4 @@
 
-import _ from 'lodash';
-
 import path from 'path';
 
 import { Parserr } from '../../../src/index';
