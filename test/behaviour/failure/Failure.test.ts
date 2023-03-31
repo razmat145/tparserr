@@ -1,4 +1,5 @@
 
+import { describe, it, expect, jest } from '@jest/globals';
 import path from 'path';
 
 import { Parserr } from '../../../src/index';
