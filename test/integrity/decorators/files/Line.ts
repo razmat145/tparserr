@@ -19,4 +19,17 @@ export class Line {
 
     @DecoratorFour()
     createdAt?: Date;
+
+    someArray: Array<string>;
+
+    @DecoratorOne('Line Audit Trail')
+    audit?: Audit;
+}
+
+class Audit {
+    @DecoratorFour()
+    why: string;
+
+    @DecoratorTwo(false)
+    how: string;
 }
