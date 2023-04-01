@@ -211,7 +211,7 @@ interface IParserOpts {
      * Callers base dir - Must be provided when using relative path file(s)/targetDir 
      * or a mix of absolute and relative files
      * 
-     * Note: usually this is the dir of the caller's context and can simply be passed as __dirname 
+     * Note: see relative paths limitations
      */
     callerBaseDir?: string;
 
