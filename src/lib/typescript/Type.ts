@@ -57,6 +57,7 @@ class Type {
         const propertyDescriptions = {};
 
         for (const property of properties) {
+
             const propertyType = Session.getTypeChecker().getTypeOfSymbol(property);
             const propertyDescription = this.getTypeDescription({ type: propertyType });
 
@@ -67,11 +68,19 @@ class Type {
                 continue;
             }
 
+            const propertyTypeDescription = {
+                ...propertyDescription,
+                required: !isPropertyOptional
+            };
+
+            if (Session.getConfigItem('enableDecorators')) {
+                const decoratorDescription = Decorator.extractPropertyDecorators(property);
+
+                !_.isEmpty(decoratorDescription) && _.assign(propertyTypeDescription, { annotations: decoratorDescription });
+            }
+
             _.assign(propertyDescriptions, {
-                [property.getName()]: {
-                    ...propertyDescription,
-                    required: !isPropertyOptional
-                }
+                [property.getName()]: propertyTypeDescription
             });
         }
 

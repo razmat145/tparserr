@@ -1,0 +1,84 @@
+[
+    {
+        "name": "Line",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "required": false,
+                "annotations": [
+                    {
+                        "name": "DecoratorOne",
+                        "args": [
+                            "maximum of 101 characters"
+                        ]
+                    }
+                ]
+            },
+            "x": {
+                "type": "number",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "DecoratorTwo",
+                        "args": [
+                            true
+                        ]
+                    }
+                ]
+            },
+            "y": {
+                "type": "number",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "DecoratorThree",
+                        "args": [
+                            102
+                        ]
+                    }
+                ]
+            },
+            "createdAt": {
+                "type": "Date",
+                "required": false,
+                "annotations": [
+                    {
+                        "name": "DecoratorFour"
+                    }
+                ]
+            }
+        },
+        "annotations": [
+            {
+                "name": "DecoratorFive",
+                "args": [
+                    "string",
+                    true,
+                    101
+                ]
+            },
+            {
+                "name": "DecoratorFour"
+            },
+            {
+                "name": "DecoratorThree",
+                "args": [
+                    101
+                ]
+            },
+            {
+                "name": "DecoratorTwo",
+                "args": [
+                    true
+                ]
+            },
+            {
+                "name": "DecoratorOne",
+                "args": [
+                    "someMessage"
+                ]
+            }
+        ]
+    }
+]

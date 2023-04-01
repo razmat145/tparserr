@@ -11,8 +11,28 @@ class Decorator {
     public extractClassDecorators(nodeRef: INodeRef): Array<IAnnotation> {
         const decorators = ts.canHaveDecorators(nodeRef.node) ? ts.getDecorators(nodeRef.node) : [];
 
-        return !_.isEmpty(decorators)
-            ? _.map(decorators, deco => {
+        return this.extractDecoratorAnnotations(decorators);
+    }
+
+    public extractPropertyDecorators(propSymbol: ts.Symbol): Array<IAnnotation> {
+
+        const propDeclarations = propSymbol.getDeclarations();
+        const maybeNode = !_.isEmpty(propDeclarations) ? propDeclarations[0] : null;
+
+        if (maybeNode) {
+            const decorators = ts.canHaveDecorators(maybeNode) ? ts.getDecorators(maybeNode) : [];
+
+            return this.extractDecoratorAnnotations(decorators);
+        }
+
+        return null;
+    }
+
+    private extractDecoratorAnnotations(decorators: Readonly<Array<ts.Decorator>>): Array<IAnnotation> {
+        if (_.isEmpty(decorators)) return;
+
+        return _(decorators)
+            .map(deco => {
                 const expression = deco.expression as ts.CallExpression;
 
                 const name = expression?.expression
@@ -30,7 +50,8 @@ class Decorator {
                         : { name }
                     : null;
             })
-            : null;
+            .compact()
+            .value();
     }
 
     private extractArg(arg: ts.Expression) {

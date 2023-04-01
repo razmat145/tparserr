@@ -1,0 +1,58 @@
+[
+    {
+        "name": "User",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "number",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "Required"
+                    }
+                ]
+            },
+            "phone": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "required": false,
+                "annotations": [
+                    {
+                        "name": "Optional"
+                    }
+                ]
+            },
+            "address": {
+                "type": "string",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "MaxLength",
+                        "args": [
+                            101
+                        ]
+                    }
+                ]
+            },
+            "active": {
+                "type": "boolean",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "Optional"
+                    }
+                ]
+            }
+        },
+        "annotations": [
+            {
+                "name": "Name",
+                "args": [
+                    "ABC User"
+                ]
+            }
+        ]
+    }
+]

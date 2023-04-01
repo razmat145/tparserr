@@ -14,3 +14,23 @@ export function DecoratorThree(index?: number): Function {
 export function DecoratorFour(): Function {
     return () => { return; };
 }
+
+export function DecoratorFive(...args: Array<any>): Function {
+    return () => { return; };
+}
+
+export function Required(): Function {
+    return () => { return; };
+}
+
+export function Name(name?: string): Function {
+    return () => { return; };
+}
+
+export function MaxLength(length?: number): Function {
+    return () => { return; };
+}
+
+export function Optional(): Function {
+    return () => { return; };
+}
