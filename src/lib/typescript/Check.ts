@@ -10,10 +10,11 @@ class Check {
         return node.kind === ts.SyntaxKind.ClassDeclaration;
     }
 
-    public isExportDefault(node: ts.Declaration | ts.Node): boolean {
+    public isExport(node: ts.Declaration | ts.Node): boolean {
         const modifier = ts.getCombinedModifierFlags(<ts.Declaration>node);
 
-        return modifier === ts.ModifierFlags.ExportDefault;
+        return !!(modifier & ts.ModifierFlags.Export)
+            || !!(modifier & ts.ModifierFlags.ExportDefault);
     }
 
     public isOptionalSymbol(symbol: ts.Symbol): boolean {

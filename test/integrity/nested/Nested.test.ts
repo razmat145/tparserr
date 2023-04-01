@@ -12,7 +12,7 @@ describe('Parserr - Nested Object Parsing', () => {
     it('should parse the nested test file accordingly', async () => {
         const filePaths = [path.join(__dirname, './files/Line')];
 
-        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyDefaultExports: true });
+        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyExports: true });
 
         expect(sutOutput).toEqual(ExpectedSutOutput);
     });

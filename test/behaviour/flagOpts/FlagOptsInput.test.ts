@@ -32,7 +32,7 @@ describe('Parserr - FlagOptsInput', () => {
             }
         }];
 
-        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyDefaultExports: true });
+        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyExports: true });
 
         expect(sutOutput).toEqual(expectedMatch);
     });
@@ -100,7 +100,7 @@ describe('Parserr - FlagOptsInput', () => {
 
         const sutOutput = await Parserr.parse({
             files: filePaths,
-            includeOnlyDefaultExports: true,
+            includeOnlyExports: true,
             includeOnlyRequiredProperties: true
         });
 
@@ -138,7 +138,7 @@ describe('Parserr - FlagOptsInput', () => {
 
         const sutOutput = await Parserr.parse({
             files: filePaths,
-            includeOnlyDefaultExports: true,
+            includeOnlyExports: true,
             includeNestedClassNames: true
         });
         

@@ -53,8 +53,8 @@ class Extractor {
             const isNodeOfInterest = !sourceFile.isDeclarationFile && !sourceFile.hasNoDefaultLib;
             if (isNodeOfInterest) {
 
-                if (Session.getConfigItem('includeOnlyDefaultExports')) {
-                    if (Check.isExportDefault(node)) {
+                if (Session.getConfigItem('includeOnlyExports')) {
+                    if (Check.isExport(node)) {
                         this.capture(maybeSymbol, nodeType);
                     }
                 } else {

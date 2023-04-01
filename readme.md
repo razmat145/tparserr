@@ -18,7 +18,7 @@ npm install --save tparserr
 Given a target file
 ```typescript
 // __dirname + ../targetFiles/Entity.ts
-export default class Entiy {
+export class Entiy {
     id: number;
 
     names?: Array<string>;
@@ -131,8 +131,8 @@ interface IParserOpts {
     // Input dir - to be used instead of *files*
     targetDir?: string;
 
-    // If to parse only default exports
-    includeOnlyDefaultExports?: boolean; // defaults to false
+    // If to parse only exports/default exports
+    includeOnlyExports?: boolean; // defaults to false
 
     // If to include only required properties
     includeOnlyRequiredProperties?: boolean; // defaults to false

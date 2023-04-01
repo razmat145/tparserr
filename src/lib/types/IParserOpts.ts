@@ -10,7 +10,7 @@ interface IParserOpts {
 
     targetDir?: string;
 
-    includeOnlyDefaultExports?: boolean;
+    includeOnlyExports?: boolean;
 
     includeOnlyRequiredProperties?: boolean;
 
