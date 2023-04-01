@@ -1,5 +1,5 @@
 
-export default class Line {
+export class Line {
     name?: string;
 
     x: Point;

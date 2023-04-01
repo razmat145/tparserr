@@ -10,11 +10,13 @@ interface IParserOpts {
 
     targetDir?: string;
 
-    includeOnlyDefaultExports?: boolean;
+    includeOnlyExports?: boolean;
 
     includeOnlyRequiredProperties?: boolean;
 
     includeNestedClassNames?: boolean;
+
+    enableDecorators?: boolean;
 
     logger?: ILogger
 }

@@ -1,5 +1,5 @@
 
-interface ITypeDescription {
+export interface ITypeDescription {
     name?: string;
 
     type?: string;
@@ -9,6 +9,12 @@ interface ITypeDescription {
     items?: ITypeDescription;
 
     properties?: Record<string, ITypeDescription>;
+
+    annotations?: Array<IAnnotation>;
 }
 
-export default ITypeDescription; 
+export interface IAnnotation {
+    name: string;
+
+    args?: Array<any>;
+}

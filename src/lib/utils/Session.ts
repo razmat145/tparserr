@@ -62,10 +62,11 @@ class Session {
 
     private getConfigDefaults(): Partial<IParserOpts> {
         return {
-            includeOnlyDefaultExports: false,
+            includeOnlyExports: false,
             useRelativePaths: false,
             includeOnlyRequiredProperties: false,
-            includeNestedClassNames: false
+            includeNestedClassNames: false,
+            enableDecorators: false
         };
     }
 

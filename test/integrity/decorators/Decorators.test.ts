@@ -7,13 +7,17 @@ import { Parserr } from '../../../src/index';
 import ExpectedSutOutput from './files/ExpectedSutOutput.json';
 
 
-describe('Parserr - Nested Object Parsing', () => {
+describe('Parserr - Decorators Parsing', () => {
 
-    it('should parse the nested test file accordingly', async () => {
+    it('should parse the class decorators accordingly', async () => {
         const filePaths = [path.join(__dirname, './files/Line')];
 
-        const sutOutput = await Parserr.parse({ files: filePaths, includeOnlyExports: true });
-
+        const sutOutput = await Parserr.parse({
+            files: filePaths,
+            includeOnlyExports: true,
+            enableDecorators: true
+        });
+        
         expect(sutOutput).toEqual(ExpectedSutOutput);
     });
 

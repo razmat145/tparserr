@@ -7,7 +7,7 @@ import Extractor from './Extractor';
 import Session from './utils/Session';
 import File from './utils/File';
 
-import ITypeDescription from './types/ITypeDescription';
+import { ITypeDescription } from './types/ITypeDescription';
 import IParserOpts from './types/IParserOpts';
 
 
@@ -46,12 +46,21 @@ class Parserr {
     }
 
     private createProgram() {
+        const baseProgramOpts = {
+            target: ts.ScriptTarget.ES2016,
+            module: ts.ModuleKind.CommonJS
+        };
+
+        if (Session.getConfigItem('enableDecorators')) {
+            _.assign(baseProgramOpts, {
+                experimentalDecorators: true,
+                emitDecoratorMetadata: true
+            });
+        }
+
         const program = ts.createProgram(
             this.filesToExtract,
-            {
-                target: ts.ScriptTarget.ES2016,
-                module: ts.ModuleKind.CommonJS
-            }
+            baseProgramOpts
         );
 
         Session.setProgram(program);
