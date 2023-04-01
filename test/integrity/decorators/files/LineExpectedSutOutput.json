@@ -47,6 +47,48 @@
                         "name": "DecoratorFour"
                     }
                 ]
+            },
+            "someArray": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "required": true
+            },
+            "audit": {
+                "type": "object",
+                "properties": {
+                    "why": {
+                        "type": "string",
+                        "required": true,
+                        "annotations": [
+                            {
+                                "name": "DecoratorFour"
+                            }
+                        ]
+                    },
+                    "how": {
+                        "type": "string",
+                        "required": true,
+                        "annotations": [
+                            {
+                                "name": "DecoratorTwo",
+                                "args": [
+                                    false
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "required": false,
+                "annotations": [
+                    {
+                        "name": "DecoratorOne",
+                        "args": [
+                            "Line Audit Trail"
+                        ]
+                    }
+                ]
             }
         },
         "annotations": [
