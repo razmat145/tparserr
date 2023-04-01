@@ -110,68 +110,83 @@ Would yield a result of
 ```
 
 #### Decorators
-Decorators are extracted as annotations `{ name, args }` pairs   
+The actual decorator implementations is not important, from `tparserr`'s POV decorators are extracted as annotations in `{ name, args }` pairs.   
+
+Note: when `enableDecorators` is set, `tparserr` will use `experimentalDecorators` and `emitDecoratorMetadata` compiler options when creating the `ts.Program`
 
 Given target file
 ```typescript
-@DecoratorFour()
-@DecoratorThree(101)
-@DecoratorTwo(true)
-@DecoratorOne('someMessage')
-export class Line {
-    name?: string;
+@Name('ABC User')
+export class User {
+    @Required()
+    id: number;
 
-    x: number;
+    @Optional()
+    phone?: Array<string>;
 
-    y: number;
+    @MaxLength(101)
+    address: string;
 
-    createdAt?: Date;
+    @Optional()
+    active: boolean;
 }
+
 ```
-The output description would contain a description of the decotaros used on the Line class
+The output would then contain a description of the used decorators and their args
 ```json
 [
     {
-        "name": "Line",
+        "name": "User",
         "type": "object",
         "properties": {
-            "name": {
+            "id": {
+                "type": "number",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "Required"
+                    }
+                ]
+            },
+            "phone": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "required": false,
+                "annotations": [
+                    {
+                        "name": "Optional"
+                    }
+                ]
+            },
+            "address": {
                 "type": "string",
-                "required": false
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "MaxLength",
+                        "args": [
+                            101
+                        ]
+                    }
+                ]
             },
-            "x": {
-                "type": "number",
-                "required": true
-            },
-            "y": {
-                "type": "number",
-                "required": true
-            },
-            "createdAt": {
-                "type": "Date",
-                "required": false
+            "active": {
+                "type": "boolean",
+                "required": true,
+                "annotations": [
+                    {
+                        "name": "Optional"
+                    }
+                ]
             }
         },
         "annotations": [
             {
-                "name": "DecoratorFour"
-            },
-            {
-                "name": "DecoratorThree",
+                "name": "Name",
                 "args": [
-                    101
-                ]
-            },
-            {
-                "name": "DecoratorTwo",
-                "args": [
-                    true
-                ]
-            },
-            {
-                "name": "DecoratorOne",
-                "args": [
-                    "someMessage"
+                    "ABC User"
                 ]
             }
         ]

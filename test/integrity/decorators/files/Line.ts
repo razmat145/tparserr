@@ -7,11 +7,16 @@ import { DecoratorOne, DecoratorTwo, DecoratorThree, DecoratorFour, DecoratorFiv
 @DecoratorTwo(true)
 @DecoratorOne('someMessage')
 export class Line {
+
+    @DecoratorOne('maximum of 101 characters')
     name?: string;
 
+    @DecoratorTwo(true)
     x: number;
 
+    @DecoratorThree(102)
     y: number;
 
+    @DecoratorFour()
     createdAt?: Date;
 }
