@@ -14,3 +14,7 @@ export function DecoratorThree(index?: number): Function {
 export function DecoratorFour(): Function {
     return () => { return; };
 }
+
+export function DecoratorFive(...args: Array<any>): Function {
+    return () => { return; };
+}

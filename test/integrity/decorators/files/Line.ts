@@ -1,6 +1,7 @@
 
-import { DecoratorOne, DecoratorTwo, DecoratorThree, DecoratorFour } from './MockDecorators';
+import { DecoratorOne, DecoratorTwo, DecoratorThree, DecoratorFour, DecoratorFive } from './MockDecorators';
 
+@DecoratorFive('string', true, 101)
 @DecoratorFour()
 @DecoratorThree(101)
 @DecoratorTwo(true)

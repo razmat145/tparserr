@@ -17,7 +17,7 @@ describe('Parserr - Decorators Parsing', () => {
             includeOnlyExports: true,
             enableDecorators: true
         });
-        
+
         expect(sutOutput).toEqual(ExpectedSutOutput);
     });
 

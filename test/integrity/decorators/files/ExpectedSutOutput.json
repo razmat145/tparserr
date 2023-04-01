@@ -22,6 +22,14 @@
         },
         "annotations": [
             {
+                "name": "DecoratorFive",
+                "args": [
+                    "string",
+                    true,
+                    101
+                ]
+            },
+            {
                 "name": "DecoratorFour"
             },
             {
