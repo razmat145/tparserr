@@ -4,7 +4,7 @@ Typescript Type Parser
 
 ## Motivation
 
-Ability to extract basic dumbed down type descriptions for a target file(s)/dir in order for said type descriptions to be potentially used by later libraries for automating/generating various dev QoL utilities.
+Ability to extract basic dumbed down type descriptions for a target file(s)/dir in order for said type descriptions to be potentially used by later libraries for automating/generating various dev QoL utilities.    
 Very opinionated in its intent, this library does not aspire to become a be-all and end-all parser and will only include more complex types as and when needed - due to the fact that the majority of real-life type entities are fairly basic.
 
 ### Installing
@@ -239,6 +239,10 @@ interface IParserOpts {
 }
 ```
 
+#### (Known) Limitations
+- Relative Paths - Absolute paths work best, but when providing relative paths and a `calledBaseDir` as `__dirname`, one has to make sure he takes into account the relative path in relation to the execution context. When building a TS program, the execution of said program will actually take place within the `/dist` folder and thus `__dirname` will have the path of the e.g. `/dist/caller.js`
+- Decorators - When decorator annotation extraction is enabled via `enableDecorators`, the base `tsconfig.json` might require `experimentalDecorators` and `emitDecoratorMetadata` compiler options to be enabled - they have to be enabled anyway in order to even decorate target classes.
+- Export Defaults - Using `export default MyClass;` on a separate line than where it's defined will not work when `includeOnlyExports` is enabled - doing so makes the `ts.Node` loose it's `ExportDefault` modifier.
 
 ## License
 This library is licensed under the Apache 2.0 License
