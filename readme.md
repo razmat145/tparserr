@@ -15,6 +15,8 @@ npm install --save tparserr
 
 ### Usage
 
+#### Basic
+
 Given a target file
 ```typescript
 // __dirname + ../targetFiles/Entity.ts
@@ -107,6 +109,76 @@ Would yield a result of
 ]
 ```
 
+#### Decorators
+Decorators are extracted as annotations `{ name, args }` pairs   
+
+Given target file
+```typescript
+@DecoratorFour()
+@DecoratorThree(101)
+@DecoratorTwo(true)
+@DecoratorOne('someMessage')
+export class Line {
+    name?: string;
+
+    x: number;
+
+    y: number;
+
+    createdAt?: Date;
+}
+```
+The output description would contain a description of the decotaros used on the Line class
+```json
+[
+    {
+        "name": "Line",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "required": false
+            },
+            "x": {
+                "type": "number",
+                "required": true
+            },
+            "y": {
+                "type": "number",
+                "required": true
+            },
+            "createdAt": {
+                "type": "Date",
+                "required": false
+            }
+        },
+        "annotations": [
+            {
+                "name": "DecoratorFour"
+            },
+            {
+                "name": "DecoratorThree",
+                "args": [
+                    101
+                ]
+            },
+            {
+                "name": "DecoratorTwo",
+                "args": [
+                    true
+                ]
+            },
+            {
+                "name": "DecoratorOne",
+                "args": [
+                    "someMessage"
+                ]
+            }
+        ]
+    }
+]
+```
+
 ### Configuration
 
 ```typescript
@@ -139,7 +211,10 @@ interface IParserOpts {
 
     // If to include the neste class names
     includeNestedClassNames?: boolean; // defaults to false
-
+    
+    // If to enable the extract of decorator descriptions
+    enableDecorators?: boolean; // defaults to false
+    
     /**
      * Logger to use instead of console if provided
      * 

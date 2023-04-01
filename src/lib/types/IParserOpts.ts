@@ -16,6 +16,8 @@ interface IParserOpts {
 
     includeNestedClassNames?: boolean;
 
+    enableDecorators?: boolean;
+
     logger?: ILogger
 }
 

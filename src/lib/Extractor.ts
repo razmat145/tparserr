@@ -7,13 +7,13 @@ import Check from './typescript/Check';
 
 import Session from './utils/Session';
 
-import ITypeDescription from './types/ITypeDescription';
-import TTypeMap from './types/TTypeMap';
+import { ITypeDescription } from './types/ITypeDescription';
+import { TNodeRefMap } from './types/NodeRef';
 
 
 class Extractor {
 
-    private allTypesMap: TTypeMap = {};
+    private allNodeRefsMap: TNodeRefMap = {};
 
     private mainEntityNames: Array<string> = [];
 
@@ -23,7 +23,7 @@ class Extractor {
         return _.map(this.mainEntityNames,
             mainEntity => _.assign(
                 { name: mainEntity },
-                Type.getTypeDescription(this.allTypesMap[mainEntity])
+                Type.getTypeDescription(this.allNodeRefsMap[mainEntity])
             )
         );
     }
@@ -46,7 +46,7 @@ class Extractor {
 
     private extractClass(node: ts.Node, sourceFile: ts.SourceFile) {
         const nodeType = Session.getTypeChecker().getTypeAtLocation(node);
-        
+
         const maybeSymbol = nodeType.getSymbol();
         if (maybeSymbol) {
 
@@ -55,24 +55,24 @@ class Extractor {
 
                 if (Session.getConfigItem('includeOnlyExports')) {
                     if (Check.isExport(node)) {
-                        this.capture(maybeSymbol, nodeType);
+                        this.capture(maybeSymbol, node, nodeType);
                     }
                 } else {
-                    this.capture(maybeSymbol, nodeType);
+                    this.capture(maybeSymbol, node, nodeType);
                 }
             }
         }
     }
 
-    private capture(symbol: ts.Symbol, type: ts.Type): void {
+    private capture(symbol: ts.Symbol, node: ts.Node, type: ts.Type): void {
         const typeName = Type.extractTypeName(symbol);
 
-        this.allTypesMap[typeName] = type;
+        this.allNodeRefsMap[typeName] = { node, type };
         this.mainEntityNames.push(typeName);
     }
 
     public clean() {
-        this.allTypesMap = {};
+        this.allNodeRefsMap = {};
         this.mainEntityNames = [];
     }
 

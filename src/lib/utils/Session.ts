@@ -65,7 +65,8 @@ class Session {
             includeOnlyExports: false,
             useRelativePaths: false,
             includeOnlyRequiredProperties: false,
-            includeNestedClassNames: false
+            includeNestedClassNames: false,
+            enableDecorators: false
         };
     }
 

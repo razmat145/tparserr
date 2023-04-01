@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Line",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "required": false
+            },
+            "x": {
+                "type": "number",
+                "required": true
+            },
+            "y": {
+                "type": "number",
+                "required": true
+            },
+            "createdAt": {
+                "type": "Date",
+                "required": false
+            }
+        },
+        "annotations": [
+            {
+                "name": "DecoratorFour"
+            },
+            {
+                "name": "DecoratorThree",
+                "args": [
+                    101
+                ]
+            },
+            {
+                "name": "DecoratorTwo",
+                "args": [
+                    true
+                ]
+            },
+            {
+                "name": "DecoratorOne",
+                "args": [
+                    "someMessage"
+                ]
+            }
+        ]
+    }
+]

@@ -2,52 +2,54 @@
 import _ from 'lodash';
 import * as ts from 'typescript';
 
+import Check from './Check';
+import Decorator from './Decorator';
+
 import Session from '../utils/Session';
 
-import Check from './Check';
-
-import ITypeDescription from '../types/ITypeDescription';
+import { INodeRef } from '../types/NodeRef';
+import { ITypeDescription } from '../types/ITypeDescription';
 
 
 class Type {
 
-    public getTypeDescription(type: ts.Type): ITypeDescription {
+    public getTypeDescription(nodeRef: INodeRef): ITypeDescription {
         switch (true) {
-            case this.isBaseType(type):
-                return this.getBaseTypeDescription(type);
+            case this.isBaseType(nodeRef):
+                return this.getBaseTypeDescription(nodeRef);
 
             default:
-                return this.getClassDescription(type);
+                return this.getClassDescription(nodeRef);
         }
     }
 
-    private isBaseType(type: ts.Type): boolean {
-        const symbol = type.getSymbol();
+    private isBaseType(nodeRef: INodeRef): boolean {
+        const symbol = nodeRef.type.getSymbol();
 
         return (!symbol
             || Session.getTypeChecker().getFullyQualifiedName(symbol) === 'Date')
-            || Check.isArrayType(type);
+            || Check.isArrayType(nodeRef.type);
     }
 
-    private getBaseTypeDescription(type: ts.Type): ITypeDescription {
+    private getBaseTypeDescription(nodeRef: INodeRef): ITypeDescription {
         switch (true) {
-            case Check.isStringType(type):
+            case Check.isStringType(nodeRef.type):
                 return { type: 'string' };
 
-            case Check.isNumberType(type):
+            case Check.isNumberType(nodeRef.type):
                 return { type: 'number' };
 
-            case Check.isBooleanType(type):
+            case Check.isBooleanType(nodeRef.type):
                 return { type: 'boolean' };
 
-            case this.isDateType(type):
+            case this.isDateType(nodeRef.type):
                 return { type: 'Date' };
 
-            case Check.isArrayType(type):
-                return this.getArrayDescription(type);
+            case Check.isArrayType(nodeRef.type):
+                return this.getArrayDescription(nodeRef.type);
 
             default:
-                throw new Error(`Type ${this.getTypeString(type)} unrecognised or not yet implemented`);
+                throw new Error(`Type ${this.getTypeString(nodeRef.type)} unrecognised or not yet implemented`);
         }
     }
 
@@ -56,7 +58,7 @@ class Type {
 
         for (const property of properties) {
             const propertyType = Session.getTypeChecker().getTypeOfSymbol(property);
-            const propertyDescription = this.getTypeDescription(propertyType)
+            const propertyDescription = this.getTypeDescription({ type: propertyType });
 
             const includeOnlyRequiredProperties = Session.getConfigItem('includeOnlyRequiredProperties');
             const isPropertyOptional = Check.isOptionalSymbol(property);
@@ -76,9 +78,9 @@ class Type {
         return propertyDescriptions;
     }
 
-    private getClassDescription(type: ts.Type): ITypeDescription {
+    private getClassDescription(nodeRef: INodeRef): ITypeDescription {
 
-        const properties = Session.getTypeChecker().getPropertiesOfType(type);
+        const properties = Session.getTypeChecker().getPropertiesOfType(nodeRef.type);
         const propertyDescription = this.getPropertyDescription(properties);
 
         const classDescription = {
@@ -86,8 +88,13 @@ class Type {
             properties: propertyDescription
         };
 
+        if (Session.getConfigItem('enableDecorators')) {
+            const decoratorDescription = Decorator.extractClassDecorators(nodeRef);
+
+            !_.isEmpty(decoratorDescription) && _.assign(classDescription, { annotations: decoratorDescription });
+        }
         if (Session.getConfigItem('includeNestedClassNames')) {
-            const name = this.extractTypeName(type.getSymbol());
+            const name = this.extractTypeName(nodeRef.type.getSymbol());
 
             name && _.assign(classDescription, { name });
         }
@@ -100,7 +107,7 @@ class Type {
 
         return {
             type: 'array',
-            items: this.getTypeDescription(indexType)
+            items: this.getTypeDescription({ type: indexType })
         };
     }
 
