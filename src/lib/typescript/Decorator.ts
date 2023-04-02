@@ -68,6 +68,10 @@ class Decorator {
             case ts.SyntaxKind.NumericLiteral:
                 return Number(arg.getText());
 
+            case ts.SyntaxKind.ArrayLiteralExpression:
+                const arrayArg = arg as ts.ArrayLiteralExpression;
+                return _.map(arrayArg.elements, el => this.extractArg(el));
+
             default:
                 throw new Error(`Decorator - Unknown or not yet implemented arg syntax kind: ${arg.kind}`);
         }

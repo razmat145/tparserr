@@ -18,6 +18,7 @@
                 },
                 "extendDefaults": true
             }
-        ]
+        ],
+        "no-case-declarations": 0
     }
 }

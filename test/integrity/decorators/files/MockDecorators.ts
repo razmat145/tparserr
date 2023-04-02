@@ -34,3 +34,9 @@ export function MaxLength(length?: number): Function {
 export function Optional(): Function {
     return () => { return; };
 }
+
+type someTuple = [string, string?] 
+
+export function ArrayDeco(...args: Array<someTuple>): Function {
+    return () => { return; };
+}

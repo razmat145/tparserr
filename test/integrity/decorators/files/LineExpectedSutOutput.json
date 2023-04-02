@@ -120,6 +120,18 @@
                 "args": [
                     "someMessage"
                 ]
+            },
+            {
+                "name": "ArrayDeco",
+                "args": [
+                    [
+                        "propOne"
+                    ],
+                    [
+                        "propTwo",
+                        "attribute"
+                    ]
+                ]
             }
         ]
     }
