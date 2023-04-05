@@ -63,6 +63,7 @@ class Decorator {
                 return false;
 
             case ts.SyntaxKind.StringLiteral:
+            case ts.SyntaxKind.NoSubstitutionTemplateLiteral:
                 return (arg as ts.StringLiteral).text;
 
             case ts.SyntaxKind.NumericLiteral:
