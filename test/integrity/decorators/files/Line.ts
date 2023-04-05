@@ -12,7 +12,7 @@ import { DecoratorOne, DecoratorTwo, DecoratorThree, DecoratorFour, DecoratorFiv
 )
 export class Line {
 
-    @DecoratorOne('maximum of 101 characters')
+    @DecoratorOne(`maximum of 101 characters`)
     name?: string;
 
     @DecoratorTwo(true)
