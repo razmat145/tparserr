@@ -18,6 +18,8 @@ interface IParserOpts {
 
     enableDecorators?: boolean;
 
+    enableSourceFilePathing?: boolean;
+
     logger?: ILogger
 }
 
