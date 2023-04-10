@@ -66,7 +66,8 @@ class Session {
             useRelativePaths: false,
             includeOnlyRequiredProperties: false,
             includeNestedClassNames: false,
-            enableDecorators: false
+            enableDecorators: false,
+            enableSourceFilePathing: false
         };
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "tparserr",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Typescript Type Parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,8 @@
   "author": "Razvan Matei (monakyo@gmail.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "tspathrr": "^0.0.5"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

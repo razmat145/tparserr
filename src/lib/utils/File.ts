@@ -4,22 +4,26 @@ import _ from 'lodash';
 import path from 'path';
 import { promises as afs } from 'fs';
 
+import { Pathrr } from 'tspathrr';
+
 import Session from './Session';
 
 
 class File {
 
-    public getNormalizedFilePaths(): Array<string> {
+    public async getNormalizedFilePaths(): Promise<Array<string>> {
         const files = Session.getConfigItem('files');
 
         if (Session.getConfigItem('useRelativePaths') || !this.areAllPathsAbsolute(files)) {
-            const aboluteFilePaths = _.map(files, file => {
-                if (path.isAbsolute(file)) {
-                    return file;
-                } else {
-                    return path.join(Session.getConfigItem('callerBaseDir'), file);
-                }
-            });
+            const aboluteFilePaths = await Promise.all(
+                _.map(files, file => {
+                    if (path.isAbsolute(file)) {
+                        return file;
+                    } else {
+                        return this.resolveRelativePath(file);
+                    }
+                })
+            );
 
             return this.normalizeFilePaths(aboluteFilePaths);
         } else {
@@ -27,8 +31,18 @@ class File {
         }
     }
 
+    private async resolveRelativePath(filePath: string) {
+        const callerBaseDir = Session.getConfigItem('callerBaseDir');
+
+        if (Session.getConfigItem('enableSourceFilePathing')) {
+            return (await Pathrr.resolve([filePath], callerBaseDir, true)).shift();
+        } else {
+            return path.join(callerBaseDir, filePath);
+        }
+    }
+
     public async extractNormalizedFilePaths(): Promise<Array<string>> {
-        const targetDir = this.getTargetDir();
+        const targetDir = await this.getTargetDir();
         const files = await afs.readdir(targetDir);
 
         const filePaths = _.map(files, file => path.join(targetDir, file));
@@ -74,11 +88,17 @@ class File {
         return _.map(filePaths, filePath => path.normalize(filePath));
     }
 
-    private getTargetDir() {
+    private async getTargetDir() {
         const targetDir = Session.getConfigItem('targetDir');
 
         if (Session.getConfigItem('useRelativePaths')) {
-            return path.join(Session.getConfigItem('callerBaseDir'), targetDir);
+            const callerBaseDir = Session.getConfigItem('callerBaseDir');
+
+            if (Session.getConfigItem('enableSourceFilePathing')) {
+                return (await Pathrr.resolve([targetDir], callerBaseDir, true)).shift();
+            } else {
+                return path.join(Session.getConfigItem('callerBaseDir'), targetDir);
+            }
         } else {
             return targetDir;
         }

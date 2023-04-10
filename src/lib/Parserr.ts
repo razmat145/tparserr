@@ -39,7 +39,7 @@ class Parserr {
         File.trapInvalidConfigOpts();
 
         if (!_.isEmpty(Session.getConfigItem('files'))) {
-            this.filesToExtract = File.getNormalizedFilePaths();
+            this.filesToExtract = await File.getNormalizedFilePaths();
         } else {
             this.filesToExtract = await File.extractNormalizedFilePaths();
         }

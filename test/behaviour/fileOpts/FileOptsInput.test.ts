@@ -1,10 +1,14 @@
 
 import _ from 'lodash';
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect, afterEach, jest } from '@jest/globals';
 
 import path from 'path';
 
+import { Pathrr } from 'tspathrr';
+
 import { Parserr } from '../../../src/index';
+
+const tspathrrResolveMock = jest.spyOn(Pathrr, 'resolve');
 
 describe('Parserr - FileOptsInput', () => {
 
@@ -26,6 +30,10 @@ describe('Parserr - FileOptsInput', () => {
             "createdAt": { "type": "Date", "required": false }
         }
     }];
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
     it('should parse the test files accordingly, using an absolute path', async () => {
         const filePaths = _.map(['./files/Line', './files/Point'], file => path.join(__dirname, file));
@@ -114,6 +122,28 @@ describe('Parserr - FileOptsInput', () => {
         await expect(Parserr.parse(opts))
             .rejects
             .toThrow('Parserr cannot use a relative path *targetDir* input without a *callerBaseDir* config');
+    });
+
+    it('should use tspathrr to transform relative files if *enableSourceFilePathing* is enabled', async () => {
+        const filePaths = ['./files/Line', './files/Point'];
+        const callerBaseDir = __dirname;
+
+        tspathrrResolveMock.mockResolvedValueOnce([path.join(callerBaseDir, './files/Line')]);
+        tspathrrResolveMock.mockResolvedValueOnce([path.join(callerBaseDir, './files/Point')]);
+
+        const sutOutput = await Parserr.parse({
+            useRelativePaths: true,
+            files: filePaths,
+            callerBaseDir,
+            enableSourceFilePathing: true,
+            includeOnlyExports: true
+        });
+
+        expect(tspathrrResolveMock).toHaveBeenCalledTimes(2);
+        expect(tspathrrResolveMock).toHaveBeenNthCalledWith(1, [filePaths[0]], callerBaseDir, true);
+        expect(tspathrrResolveMock).toHaveBeenNthCalledWith(2, [filePaths[1]], callerBaseDir, true);
+
+        expect(sutOutput).toEqual(expectedOutput);
     });
 
 });

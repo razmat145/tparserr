@@ -108,6 +108,27 @@ Would yield a result of
     }
 ]
 ```
+#### Alternative pathing options
+If the typescript files you are attempting to parse are within the current source-code, it might be handy to:   
+
+###### Resolve the relative paths against the current `cwd` 
+
+```typescript
+// e.g. given a file of ./models/User.ts
+const output = await Parserr.parse({
+    files: [path.resolve('./src/lib/models/User.ts')]
+});
+```
+###### Enable `enableSourceFilePathing` config to make use of https://github.com/razmat145/tspathrr in order to resolve the relative paths against the `tsconfig` opts   
+This uses `rootDir` and `outDir` typescript compiler opts in order to properly resolve the file absolute path against the `__dirname` and `process.cwd()`
+```typescript
+// e.g. given a file of ./models/User.ts
+const output = await Parserr.parse({
+    files: ['./models/User.ts'],
+    callerBaseDir: __dirname,
+    enableSourceFilePathing: true
+});
+```
 
 #### Decorators
 The actual decorator implementations is not important, from `tparserr`'s POV decorators are extracted as annotations in `{ name, args }` pairs.   
@@ -229,6 +250,9 @@ interface IParserOpts {
     
     // If to enable the extract of decorator descriptions
     enableDecorators?: boolean; // defaults to false
+    
+    // If to enable the use of tspathrr to resolve relative paths
+    enableSourceFilePathing?: boolean // defaults to false
     
     /**
      * Logger to use instead of console if provided
