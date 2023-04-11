@@ -8,7 +8,11 @@ class Check {
 
     public isClassOrInterfaceKind(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.ClassDeclaration ||
-            node.kind === ts.SyntaxKind.InterfaceDeclaration;
+            this.isInterface(node)
+    }
+
+    public isInterface(node: ts.Node): boolean {
+        return node.kind === ts.SyntaxKind.InterfaceDeclaration;
     }
 
     public isExport(node: ts.Declaration | ts.Node): boolean {

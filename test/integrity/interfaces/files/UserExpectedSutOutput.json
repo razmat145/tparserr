@@ -1,0 +1,27 @@
+[
+    {
+        "name": "User",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "number",
+                "required": true
+            },
+            "phone": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "required": false
+            },
+            "address": {
+                "type": "string",
+                "required": true
+            },
+            "active": {
+                "type": "boolean",
+                "required": true
+            }
+        }
+    }
+]
