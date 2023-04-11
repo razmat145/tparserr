@@ -1,6 +1,6 @@
 {
   "name": "tparserr",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Typescript Type Parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

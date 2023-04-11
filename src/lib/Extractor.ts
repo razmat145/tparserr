@@ -67,7 +67,7 @@ class Extractor {
     private capture(symbol: ts.Symbol, node: ts.Node, type: ts.Type): void {
         const typeName = Type.extractTypeName(symbol);
 
-        this.allNodeRefsMap[typeName] = { node, type };
+        this.allNodeRefsMap[typeName] = { node, type, isInterface: Check.isInterface(node) };
         this.mainEntityNames.push(typeName);
     }
 

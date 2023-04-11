@@ -2,8 +2,6 @@
 import _ from 'lodash';
 import * as ts from 'typescript';
 
-import Check from './Check';
-
 import { INodeRef } from '../types/NodeRef';
 import { IAnnotation } from '../types/ITypeDescription';
 
@@ -11,9 +9,7 @@ import { IAnnotation } from '../types/ITypeDescription';
 class Decorator {
 
     public extractClassDecorators(nodeRef: INodeRef): Array<IAnnotation> {
-        if (Check.isInterface(nodeRef.node)) {
-            return;
-        }
+        if (nodeRef.isInterface) { return; }
 
         const decorators = ts.canHaveDecorators(nodeRef.node) ? ts.getDecorators(nodeRef.node) : [];
 

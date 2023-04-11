@@ -7,6 +7,8 @@ export interface INodeRef {
     type: ts.Type;
 
     child?: boolean;
+
+    isInterface: boolean;
 }
 
 export type TNodeRefMap = Record<string, INodeRef>;
