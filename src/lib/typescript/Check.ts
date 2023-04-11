@@ -7,12 +7,12 @@ import Session from '../utils/Session';
 class Check {
 
     public isClassOrInterfaceKind(node: ts.Node): boolean {
-        return node.kind === ts.SyntaxKind.ClassDeclaration ||
+        return node?.kind === ts.SyntaxKind.ClassDeclaration ||
             this.isInterface(node)
     }
 
     public isInterface(node: ts.Node): boolean {
-        return node.kind === ts.SyntaxKind.InterfaceDeclaration;
+        return node?.kind === ts.SyntaxKind.InterfaceDeclaration;
     }
 
     public isExport(node: ts.Declaration | ts.Node): boolean {

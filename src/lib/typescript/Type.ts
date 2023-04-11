@@ -46,20 +46,20 @@ class Type {
                 return { type: 'Date' };
 
             case Check.isArrayType(nodeRef.type):
-                return this.getArrayDescription(nodeRef.type);
+                return this.getArrayDescription(nodeRef);
 
             default:
                 throw new Error(`Type ${this.getTypeString(nodeRef.type)} unrecognised or not yet implemented`);
         }
     }
 
-    private getPropertyDescription(properties: Array<ts.Symbol>): Record<string, ITypeDescription> {
+    private getPropertyDescription(properties: Array<ts.Symbol>, parentNode: INodeRef): Record<string, ITypeDescription> {
         const propertyDescriptions = {};
 
         for (const property of properties) {
 
             const propertyType = Session.getTypeChecker().getTypeOfSymbol(property);
-            const propertyDescription = this.getTypeDescription({ type: propertyType, child: true });
+            const propertyDescription = this.getTypeDescription({ type: propertyType, child: true, isInterface: parentNode.isInterface });
 
             const includeOnlyRequiredProperties = Session.getConfigItem('includeOnlyRequiredProperties');
             const isPropertyOptional = Check.isOptionalSymbol(property);
@@ -90,7 +90,7 @@ class Type {
     private getClassDescription(nodeRef: INodeRef): ITypeDescription {
 
         const properties = Session.getTypeChecker().getPropertiesOfType(nodeRef.type);
-        const propertyDescription = this.getPropertyDescription(properties);
+        const propertyDescription = this.getPropertyDescription(properties, nodeRef);
 
         const classDescription = {
             type: 'object',
@@ -111,12 +111,12 @@ class Type {
         return classDescription;
     }
 
-    private getArrayDescription(type: ts.Type): ITypeDescription {
-        const indexType = Session.getTypeChecker().getIndexTypeOfType(type, ts.IndexKind.Number);
+    private getArrayDescription(nodeRef: INodeRef): ITypeDescription {
+        const indexType = Session.getTypeChecker().getIndexTypeOfType(nodeRef.type, ts.IndexKind.Number);
 
         return {
             type: 'array',
-            items: this.getTypeDescription({ type: indexType })
+            items: this.getTypeDescription({ type: indexType, isInterface: nodeRef.isInterface })
         };
     }
 
