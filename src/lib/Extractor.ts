@@ -37,7 +37,7 @@ class Extractor {
     }
 
     private extractNode(node: ts.Node, sourceFile: ts.SourceFile) {
-        if (Check.isClassKind(node)) {
+        if (Check.isClassOrInterfaceKind(node)) {
             this.extractClass(node, sourceFile);
         } else {
             ts.forEachChild(node, (child) => this.extractNode(child, sourceFile));

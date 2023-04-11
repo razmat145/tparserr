@@ -6,8 +6,9 @@ import Session from '../utils/Session';
 
 class Check {
 
-    public isClassKind(node: ts.Node): boolean {
-        return node.kind === ts.SyntaxKind.ClassDeclaration;
+    public isClassOrInterfaceKind(node: ts.Node): boolean {
+        return node.kind === ts.SyntaxKind.ClassDeclaration ||
+            node.kind === ts.SyntaxKind.InterfaceDeclaration;
     }
 
     public isExport(node: ts.Declaration | ts.Node): boolean {
