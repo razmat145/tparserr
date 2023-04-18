@@ -15,7 +15,36 @@ npm install --save tparserr
 
 ### Usage
 
-#### Basic
+#### cli
+###### within a project
+```
+npx tparserr generate -f=./src/lib/models/User.ts -o=./User.json
+```
+###### installed as global npm package
+```
+tparserr generate -d=./using-tparserr/src/lib/models -o=./types.json
+```
+###### options
+```
+Usage: tparserr generate [options]
+
+Options:
+      --version                        Show version number             [boolean]
+  -f, --file                           File path to load and generate   [string]
+  -d, --dir                            Dir path to load and generate    [string]
+  -o, --output                         Output file path      [string] [required]
+      --includeOnlyExports             If to include only exported types
+                                                      [boolean] [default: false]
+      --includeOnlyRequiredProperties  If to include only required properties
+                                                      [boolean] [default: false]
+      --includeNestedClassNames        If to include nested class names
+                                                      [boolean] [default: false]
+      --enableDecorators               If to enable decorators
+                                                      [boolean] [default: false]
+  -h, --help                           Show help                       [boolean]
+```
+
+#### Programatic
 
 Given a target file
 ```typescript
