@@ -1,9 +1,12 @@
 {
   "name": "tparserr",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Typescript Type Parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "tsoa": "dist/cli.js"
+  },
   "scripts": {
     "compile": "tsc",
     "lint": "eslint .",
@@ -16,7 +19,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.21",
-    "tspathrr": "^0.0.5"
+    "tspathrr": "^0.0.5",
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
