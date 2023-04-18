@@ -4,6 +4,8 @@ import { hideBin } from 'yargs/helpers';
 import _ from 'lodash';
 import { promises as afs } from 'fs';
 
+import path from 'path';
+
 import { Parserr } from './index';
 
 const filePathOpts: yargs.Options = {
@@ -82,8 +84,11 @@ const runner = async (args) => {
         _.assign(opts, { targetDir: dir });
     }
 
-    const typeDescription = await Parserr.parse(opts);
+    const typeDescription = await Parserr.parse(_.assign(opts, {
+        callerBaseDir: process.cwd()
+    }));
 
+    const outputFilePath = path.isAbsolute(output) ? output : path.resolve(process.cwd(), output);
     await afs.writeFile(output, JSON.stringify(typeDescription));
 };
 
