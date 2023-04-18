@@ -89,7 +89,7 @@ const runner = async (args) => {
     }));
 
     const outputFilePath = path.isAbsolute(output) ? output : path.resolve(process.cwd(), output);
-    await afs.writeFile(output, JSON.stringify(typeDescription));
+    await afs.writeFile(outputFilePath, JSON.stringify(typeDescription));
 };
 
 export function run() {
